@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FitApp — варианты дизайна</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../icons/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ───────── Варианты: токены цветов, шрифты, скругления ───────── */
+.v1 { --font: 'Inter', system-ui, sans-serif; --head: 'Inter', system-ui, sans-serif; --head-tt: none; --head-ls: -0.02em; --r: 20px; --r-sm: 14px; --btn-r: 999px; }
+.v1.dark  { --bg:#0e0f12; --surface:#181a1f; --surface2:#22252c; --text:#f3f4f6; --muted:#9aa0ad; --border:#2a2d35; --accent:#c6ff3d; --on-accent:#0e0f12; --accent-text:#c6ff3d; --media:#23262d; }
+.v1.light { --bg:#f5f6f8; --surface:#ffffff; --surface2:#eef0f3; --text:#0e0f12; --muted:#5d6270; --border:#e3e5ea; --accent:#c6ff3d; --on-accent:#0e0f12; --accent-text:#4f7a00; --media:#e7e9ee; }
+
+
+.v3 { --font: 'Manrope', system-ui, sans-serif; --head: 'Manrope', system-ui, sans-serif; --head-tt: none; --head-ls: -0.01em; --r: 26px; --r-sm: 18px; --btn-r: 999px; }
+.v3.dark  { --bg:#0a0f1e; --surface:rgba(255,255,255,.06); --surface2:rgba(255,255,255,.1); --text:#eef1ff; --muted:#93a0c4; --border:rgba(255,255,255,.1); --accent:linear-gradient(135deg,#7c5cff,#3fa9ff); --accent-solid:#6f7bff; --on-accent:#ffffff; --accent-text:#9db4ff; --media:#151c33; }
+.v3.light { --bg:#eef1f8; --surface:rgba(255,255,255,.85); --surface2:#e3e8f4; --text:#111733; --muted:#5d6788; --border:#dde3f0; --accent:linear-gradient(135deg,#7c5cff,#3fa9ff); --accent-solid:#5b62f0; --on-accent:#ffffff; --accent-text:#4b52e0; --media:#dde3f2; }
+.v1 { --accent-solid: var(--accent); }
+/* Вариант 4 = форма 3-го (стекло, мягкие формы, меню-«таблетка») + цвета 1-го (графит и салатовый). */
+.v4.dark  { --bg:#0e0f12; --surface:rgba(255,255,255,.055); --surface2:rgba(255,255,255,.09); --text:#f3f4f6; --muted:#9aa0ad; --border:rgba(255,255,255,.09); --accent:linear-gradient(135deg,#d8ff5c,#9be22d); --accent-solid:#c6ff3d; --on-accent:#0e0f12; --accent-text:#c6ff3d; --media:#1c1f25; --glow:#c6ff3d40; }
+.v4.light { --bg:#f5f6f8; --surface:rgba(255,255,255,.88); --surface2:#e9ecf0; --text:#0e0f12; --muted:#5d6270; --border:#e3e5ea; --accent:linear-gradient(135deg,#d8ff5c,#9be22d); --accent-solid:#b5f02a; --on-accent:#0e0f12; --accent-text:#4f7a00; --media:#e4e7ec; --glow:#9be22d55; }
+
+/* ───────── Вторая тройка ───────── */
+/* 7 · Витрина: как приложение с фильмами — чёрный, крупные видео, каталог лентами, красно-оранжевый градиент. */
+.v7 { --font: 'Inter', system-ui, sans-serif; --head: 'Inter', system-ui, sans-serif; --head-tt: none; --head-ls: -0.03em; --r: 14px; --r-sm: 12px; --btn-r: 999px; }
+.v7.dark  { --bg:#000000; --surface:#141414; --surface2:#1f1f1f; --text:#ffffff; --muted:#8e8e93; --border:#262626; --accent:linear-gradient(135deg,#ff375f,#ff9f0a); --accent-solid:#ff375f; --on-accent:#ffffff; --accent-text:#ff5c7a; --media:#1c1c1e; }
+.v7.light { --bg:#ffffff; --surface:#f4f4f6; --surface2:#ebebef; --text:#000000; --muted:#6e6e73; --border:#e2e2e6; --accent:linear-gradient(135deg,#ff375f,#ff9f0a); --accent-solid:#ff375f; --on-accent:#ffffff; --accent-text:#e0244a; --media:#e9e9ee; }
+
+/* ───────── Страница с переключателями ───────── */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; background: #1b1d22; color: #f3f4f6; font-family: 'Inter', system-ui, sans-serif; }
+.panel { position: sticky; top: 0; z-index: 50; background: #1b1d22ee; backdrop-filter: blur(10px); padding: calc(env(safe-area-inset-top) + 8px) 12px 8px; display: flex; flex-direction: column; gap: 6px; border-bottom: 1px solid #2c2f37; }
+.row { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.row::-webkit-scrollbar { display: none; }
+.chip { flex: 0 0 auto; border: 1px solid #3a3e48; background: #262931; color: #cfd3dc; border-radius: 999px; padding: 8px 12px; font: 600 13px 'Inter', sans-serif; cursor: pointer; }
+.chip.on { background: #f3f4f6; color: #0e0f12; border-color: #f3f4f6; }
+.chip.pal { border-color: #5a6070; }
+.chip.pal.on { background: #c6ff3d; color: #0e0f12; border-color: #c6ff3d; }
+.hint { font-size: 12px; color: #8b909c; margin: 0; }
+.stage { display: flex; justify-content: center; padding: 16px 0 40px; }
+@media (max-width: 500px) { .stage { padding: 0; } }
+
+/* ───────── «Телефон» ───────── */
+.phone { position: relative; width: 390px; height: 800px; max-width: 100%; overflow: hidden; border-radius: 36px; border: 1px solid #333; background: var(--bg); color: var(--text); font-family: var(--font); box-shadow: 0 30px 80px #0008; }
+@media (max-width: 500px) { .phone { width: 100%; height: calc(100dvh - var(--ph, 128px)); border-radius: 0; border: 0; box-shadow: none; } }
+.v3.dark.phone { background: radial-gradient(120% 60% at 100% 0%, #2a1f6b 0%, transparent 60%), radial-gradient(90% 50% at 0% 100%, #0d3a66 0%, transparent 60%), #0a0f1e; }
+.v3.light.phone { background: radial-gradient(120% 60% at 100% 0%, #e2dcff 0%, transparent 60%), radial-gradient(90% 50% at 0% 100%, #d6ecff 0%, transparent 60%), #eef1f8; }
+.v4.dark.phone { background: radial-gradient(120% 60% at 100% 0%, #2b3a12 0%, transparent 60%), radial-gradient(90% 50% at 0% 100%, #1b2a1a 0%, transparent 60%), #0e0f12; }
+.v4.light.phone { background: radial-gradient(120% 60% at 100% 0%, #ecffc2 0%, transparent 60%), radial-gradient(90% 50% at 0% 100%, #e3f6d6 0%, transparent 60%), #f5f6f8; }
+.scroll { position: absolute; inset: 0; overflow-y: auto; padding: 18px 16px 110px; scrollbar-width: none; }
+.scroll::-webkit-scrollbar { display: none; }
+
+h1 { font-family: var(--head); text-transform: var(--head-tt); letter-spacing: var(--head-ls); font-size: 32px; font-weight: 800; margin: 0; line-height: 1.05; }
+h2 { font-family: var(--head); text-transform: var(--head-tt); letter-spacing: var(--head-ls); font-size: 19px; font-weight: 800; margin: 0; }
+.muted { color: var(--muted); }
+.topbar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.topbar .grow { flex: 1; min-width: 0; }
+.iconbtn { position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: var(--btn-r); background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; }
+.v3 .iconbtn { backdrop-filter: blur(16px); }
+.badge { position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font: 800 12px var(--font); display: grid; place-items: center; transition: transform .25s; }
+.badge.pop { transform: scale(1.35); }
+svg { display: block; }
+
+/* ───────── Каталог: группы ───────── */
+.groups { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.group { position: relative; min-height: 112px; padding: 14px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; cursor: pointer; }
+.group .gname { font-family: var(--head); text-transform: var(--head-tt); font-weight: 800; font-size: 18px; letter-spacing: var(--head-ls); }
+.group .gcount { font-size: 13px; color: var(--muted); }
+.group .gicon { position: absolute; right: -10px; bottom: -14px; opacity: .14; color: var(--text); }
+.v1 .group:first-child { grid-column: span 2; min-height: 140px; background: var(--accent); color: var(--on-accent); border: 0; }
+.v1 .group:first-child .gcount { color: var(--on-accent); opacity: .7; }
+.v1 .group:first-child .gicon { opacity: .25; color: var(--on-accent); }
+.v3 .group { backdrop-filter: blur(18px); min-height: 124px; }
+.v3 .group .gdot { width: 42px; height: 42px; border-radius: 14px; background: var(--accent); display: grid; place-items: center; color: #fff; box-shadow: 0 8px 24px #6f7bff55; }
+.v3 .group .gicon { display: none; }
+
+/* ───────── Экран группы: карточки упражнений ───────── */
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.card { position: relative; border-radius: var(--r); background: var(--surface); border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; }
+.v3 .card { backdrop-filter: blur(18px); }
+.media { position: relative; aspect-ratio: 4 / 5; background: var(--media); overflow: hidden; }
+.media .lift { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); }
+.media .lift svg { animation: lift 1.6s ease-in-out infinite; }
+.paused .media .lift svg { animation-play-state: paused; }
+@keyframes lift { 0%,100% { transform: translateY(18px); } 50% { transform: translateY(-18px); } }
+.media .shine { position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, #ffffff10 50%, transparent 70%); background-size: 250% 100%; animation: shine 3s linear infinite; }
+.paused .media .shine { animation-play-state: paused; }
+@keyframes shine { from { background-position: 150% 0; } to { background-position: -100% 0; } }
+.media .tag { position: absolute; left: 8px; bottom: 8px; font-size: 10px; color: var(--muted); background: var(--bg); padding: 2px 6px; border-radius: 6px; opacity: .8; }
+.pause { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 999px; display: grid; place-items: center; background: #0008; color: #fff; border: 0; cursor: pointer; backdrop-filter: blur(6px); }
+.cinfo { padding: 10px 10px 12px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.cname { font-weight: 700; font-size: 14px; line-height: 1.25; }
+.cactions { display: flex; align-items: center; gap: 4px; margin-top: auto; }
+.mini { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 999px; color: var(--muted); background: transparent; border: 0; cursor: pointer; }
+.plus { margin-left: auto; width: 40px; height: 40px; border-radius: var(--btn-r); background: var(--accent); color: var(--on-accent); border: 0; display: grid; place-items: center; cursor: pointer; transition: transform .15s; }
+.plus:active { transform: scale(.9); }
+.plus.added { background: var(--surface2); color: var(--accent-text); }
+.v3 .plus { box-shadow: 0 8px 20px #6f7bff55; }
+/* V2: название поверх видео */
+
+.flybox { position: absolute; z-index: 30; width: 16px; height: 16px; border-radius: 999px; background: var(--accent-solid); pointer-events: none; transition: transform .55s cubic-bezier(.5,-0.3,.7,1), opacity .55s; }
+
+/* Плавающая полоска «Тренировка» */
+.cartbar { position: absolute; left: 12px; right: 12px; bottom: 84px; z-index: 20; display: flex; align-items: center; gap: 10px; padding: 10px 10px 10px 16px; border-radius: var(--r); background: var(--text); color: var(--bg); box-shadow: 0 10px 30px #0006; }
+.v3 .cartbar { background: var(--accent); color: #fff; }
+.cartbar b { font-size: 15px; }
+.cartbar .go { margin-left: auto; padding: 10px 14px; border-radius: var(--btn-r); background: var(--accent); color: var(--on-accent); font-weight: 800; font-size: 14px; border: 0; }
+.v3 .cartbar .go { background: #fff; color: #3d3fb8; }
+
+/* ───────── Корзина / тренировка ───────── */
+.list { display: flex; flex-direction: column; gap: 8px; }
+.item { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: var(--r-sm); background: var(--surface); border: 1px solid var(--border); }
+.v3 .item { backdrop-filter: blur(18px); }
+.thumb { width: 54px; height: 54px; border-radius: calc(var(--r-sm) - 4px); background: var(--media); display: grid; place-items: center; color: var(--muted); flex: 0 0 auto; }
+.item .meta { flex: 1; min-width: 0; }
+.item .t { font-weight: 700; font-size: 15px; }
+.item .s { font-size: 13px; color: var(--muted); }
+.drag { color: var(--muted); padding: 4px; cursor: grab; }
+.box { padding: 14px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px; }
+.v3 .box { backdrop-filter: blur(18px); }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 4px; border-radius: calc(var(--r-sm) + 2px); background: var(--surface2); }
+.seg span { text-align: center; padding: 9px 4px; border-radius: var(--r-sm); font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; }
+.seg span.on { background: var(--bg); color: var(--text); box-shadow: 0 1px 3px #0003; }
+.v3 .seg span.on { background: var(--accent); color: #fff; }
+.btn { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 54px; border-radius: var(--btn-r); background: var(--accent); color: var(--on-accent); font: 800 17px var(--font); border: 0; width: 100%; cursor: pointer; }
+.v3 .btn { box-shadow: 0 12px 30px #6f7bff55; }
+.btn.ghost { background: var(--surface); color: var(--text); border: 1px solid var(--border); font-size: 15px; min-height: 48px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+/* ───────── Выполнение ───────── */
+.ex-hero { position: relative; border-radius: var(--r); overflow: hidden; background: var(--media); aspect-ratio: 16 / 10; }
+.ex-hero .lift { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); }
+.ex-hero .lift svg { animation: lift 1.6s ease-in-out infinite; }
+.progress { display: flex; gap: 4px; }
+.progress i { flex: 1; height: 4px; border-radius: 4px; background: var(--surface2); }
+.progress i.on { background: var(--accent); }
+.sets { display: flex; flex-direction: column; gap: 6px; }
+.set { display: grid; grid-template-columns: 28px 1fr 1fr 52px; align-items: center; gap: 8px; padding: 6px 6px 6px 10px; border-radius: var(--r-sm); background: var(--surface); border: 1px solid var(--border); }
+.set .n { font-weight: 800; color: var(--muted); }
+.set .val { text-align: center; padding: 10px 4px; border-radius: calc(var(--r-sm) - 4px); background: var(--surface2); font-weight: 800; font-size: 17px; }
+.set .val small { display: block; font-size: 10px; font-weight: 600; color: var(--muted); }
+.check { width: 44px; height: 44px; border-radius: var(--btn-r); border: 2px solid var(--border); display: grid; place-items: center; color: transparent; cursor: pointer; background: transparent; }
+.set.done { opacity: .75; }
+.set.done .check { background: var(--accent); border-color: transparent; color: var(--on-accent); }
+.rest { display: flex; align-items: center; gap: 14px; padding: 14px; border-radius: var(--r); background: var(--text); color: var(--bg); }
+.v3 .rest { background: var(--accent); color: #fff; }
+.ring { position: relative; width: 64px; height: 64px; flex: 0 0 auto; }
+.ring b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 16px; }
+
+/* ───────── Нижнее меню ───────── */
+.tabbar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 25; display: grid; grid-template-columns: repeat(5, 1fr); padding: 8px 6px 18px; background: var(--bg); border-top: 1px solid var(--border); }
+.v3 .tabbar { left: 12px; right: 12px; bottom: 12px; border-radius: 26px; border: 1px solid var(--border); background: var(--surface); backdrop-filter: blur(20px); padding: 8px 6px; }
+.v3.dark .tabbar { background: #141a30cc; }
+.tab { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10.5px; color: var(--muted); cursor: pointer; position: relative; }
+.tab.on { color: var(--text); }
+.v1 .tab.on svg { color: var(--accent-text); }
+.v3 .tab.on svg { color: var(--accent-text); }
+
+/* ───────── Окно ⓘ ───────── */
+.sheet-bg { position: absolute; inset: 0; z-index: 40; background: #0006; backdrop-filter: blur(4px); display: none; align-items: flex-end; }
+.sheet-bg.open { display: flex; }
+.sheet { width: 100%; max-height: 75%; overflow-y: auto; background: var(--bg); border-radius: var(--r) var(--r) 0 0; padding: 10px 18px 28px; border-top: 1px solid var(--border); }
+.v3 .sheet { background: var(--surface2); backdrop-filter: blur(30px); }
+.v3.dark .sheet { background: #161d36f2; }
+.grab { width: 40px; height: 5px; border-radius: 9px; background: var(--border); margin: 0 auto 12px; }
+.sheet h3 { font-family: var(--head); text-transform: var(--head-tt); margin: 12px 0 6px; font-size: 13px; letter-spacing: .06em; color: var(--accent-text); text-transform: uppercase; }
+.sheet ul { margin: 0; padding-left: 18px; line-height: 1.5; font-size: 15px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips span { padding: 5px 10px; border-radius: 999px; background: var(--surface2); font-size: 13px; }
+.note { margin-top: 14px; font-size: 13px; color: var(--muted); line-height: 1.45; }
+.v4 .group .gdot { color: var(--on-accent); box-shadow: 0 8px 24px var(--glow); }
+.v4 .plus, .v4 .btn { box-shadow: 0 10px 26px var(--glow); }
+.v4 .seg span.on { color: var(--on-accent); }
+.v4 .cartbar, .v4 .rest { color: var(--on-accent); }
+.v4 .cartbar .go { background: #0e0f12; color: #c6ff3d; }
+.v4.dark .tabbar { background: #16181dcc; }
+.v4.dark .sheet { background: #181a1ff2; }
+/* 7 · Витрина */
+.v7 h1 { font-size: 34px; font-weight: 800; }
+.shelf { margin: 0 -16px 18px; }
+.shelf-h { display: flex; align-items: baseline; justify-content: space-between; padding: 0 16px 8px; }
+.shelf-h b { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+.shelf-h span { font-size: 14px; color: var(--accent-text); font-weight: 600; cursor: pointer; }
+.shelf-row { display: flex; gap: 10px; overflow-x: auto; padding: 0 16px; scrollbar-width: none; scroll-snap-type: x mandatory; }
+.shelf-row::-webkit-scrollbar { display: none; }
+.tile { flex: 0 0 132px; scroll-snap-align: start; position: relative; border-radius: var(--r); overflow: hidden; }
+.tile .media { aspect-ratio: 3 / 4; border-radius: var(--r); }
+.tile .media .tag { display: none; }
+.tile .t { position: absolute; left: 10px; right: 10px; bottom: 10px; color: #fff; font-weight: 700; font-size: 13px; line-height: 1.2; z-index: 2; }
+.tile .media::after { content: ''; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, #000b); }
+.hero { position: relative; margin: 0 -16px 14px; aspect-ratio: 4 / 3; background: var(--media); overflow: hidden; }
+.hero .lift { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); }
+.hero .lift svg { animation: lift 1.6s ease-in-out infinite; }
+.hero::after { content: ''; position: absolute; inset: 40% 0 0; background: linear-gradient(transparent, var(--bg)); }
+.hero .cap { position: absolute; left: 16px; right: 16px; bottom: 12px; z-index: 2; }
+.hero .cap small { color: var(--accent-text); font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.hero .cap div { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
+.hero .cap .row2 { display: flex; gap: 8px; margin-top: 10px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 16px; border-radius: 999px; background: var(--accent); color: #fff; font-weight: 700; font-size: 14px; border: 0; cursor: pointer; }
+.pill.ghost { background: var(--surface2); color: var(--text); }
+.v7 .item { border: 0; background: transparent; padding: 6px 0; border-bottom: 1px solid var(--border); border-radius: 0; }
+.v7 .item .thumb { width: 64px; height: 80px; }
+.v7 .plus { width: 38px; height: 38px; }
+.v7 .tabbar { background: #000000e6; backdrop-filter: blur(20px); }
+.v7.light .tabbar { background: #ffffffe6; }
+.v7 .tab.on svg, .v7 .tab.on { color: var(--accent-text); }
+.v7 .cartbar { background: var(--accent); color: #fff; border-radius: 18px; }
+.v7 .cartbar .go { background: #fff; color: #e0244a; }
+.v7 .rest { background: var(--accent); color: #fff; }
+.v7 .seg span.on { background: var(--accent); color: #fff; }
+.v7 .gicon { display: none; }
+/* 8 · Витрина + Неон: ленты видео в каталоге, «+» прямо на плитке */
+.v8 .shelf-h b { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 20px; }
+.v8 .shelf-h span { color: var(--accent-text); }
+.v8 .tile { flex-basis: 148px; overflow: visible; }
+.v8 .tile .media { aspect-ratio: 4 / 5; border: 1px solid var(--border); }
+.v8 .tile .media::after { display: none; }
+.trow { display: flex; align-items: flex-start; gap: 6px; padding: 8px 2px 0; }
+.tname { flex: 1; min-width: 0; font-weight: 700; font-size: 13.5px; line-height: 1.25; }
+/* Экран группы в 8-м: квадратное видео, плашка в одну строку (название + «+»), ⓘ и история — на видео (выбор владельца А2). */
+.v8 .cards .media { aspect-ratio: 1 / 1; }
+.v8 .cards .media .tag { display: none; }
+.v8 .cards .cinfo { flex-direction: row; align-items: center; padding: 8px 8px 8px 10px; gap: 6px; }
+.v8 .cards .cname { flex: 1; font-size: 13px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.v8 .cards .cactions { margin-top: 0; }
+.v8 .cards .cactions .mini { position: absolute; top: 8px; width: 30px; height: 30px; background: #0008; color: #fff; backdrop-filter: blur(6px); }
+.v8 .cards .cactions .mini:nth-child(1) { left: 8px; }
+.v8 .cards .cactions .mini:nth-child(2) { left: 44px; }
+.v8 .cards .plus { width: 36px; height: 36px; }
+.tplus { flex: 0 0 auto; width: 36px; height: 36px; border-radius: 999px; border: 0; display: grid; place-items: center; background: var(--accent); color: var(--on-accent); box-shadow: 0 6px 16px var(--glow, #0005); cursor: pointer; transition: transform .15s; }
+.tplus:active { transform: scale(.88); }
+.tplus.added { background: var(--surface2); color: var(--accent-text); box-shadow: none; }
+</style>
+</head>
+<body>
+<div class="panel" id="panel">
+  <div class="row" id="variants"></div>
+  <div class="row" id="palettes"></div>
+  <div class="row" id="screens"></div>
+  <div class="row" id="themes"></div>
+  <p class="hint" id="hint"></p>
+</div>
+<div class="stage"><div class="phone" id="phone"></div></div>
+
+<script>
+// Макет для выбора стиля (ТЗ п. 20): 3 варианта × 4 экрана × 2 темы. Видео — анимированные заглушки.
+const VARIANTS = [
+  { id: 'v1', name: '1 · Неон', hint: 'Тёмный графит + салатовый акцент. Крупные скруглённые карточки, «Грудь» выделена. Продолжение текущего стиля.' },
+  { id: 'v3', name: '3 · Глубина', hint: 'Тёмно-синий с фиолетово-голубым градиентом, «матовое стекло», мягкие формы, меню-«таблетка». Современный премиум (как Gymverse).' },
+  { id: 'v4', name: '4 · Глубина + Неон', hint: 'Форма 3-го варианта (матовое стекло, мягкие формы, меню-«таблетка») в цветах 1-го — графит и салатовый.' },
+  { id: 'v8', name: '★ 8 · Витрина + Неон', hint: 'Ваш выбор. Второй ряд кнопок (салатовые) — цвет приложения: 9 палитр. Каталог — ленты видео с «+», «Все ›» — группа сеткой.' },
+  { id: 'v7', name: '7 · Витрина', hint: 'Как приложение с фильмами: чёрный фон, каталог — ленты видео по группам (листаются вбок), у группы — большое видео сверху и список. Красно-оранжевый градиент.' },
+]
+const SCREENS = [['catalog', 'Каталог'], ['group', 'Группа «Грудь»'], ['workout', 'Тренировка'], ['set', 'Подход']]
+const THEMES = [['dark', 'Тёмная'], ['light', 'Светлая']]
+// Палитры для 8-го варианта — из palettes.mjs (их же возьмём в приложение).
+let PALETTES = []
+import('./palettes.mjs').then((m) => {
+  const st = document.createElement('style'); st.textContent = m.CSS; document.head.appendChild(st)
+  PALETTES = m.ORDER; render()
+}).catch(() => {})
+const state = { v: 'v8', pal: null, s: 'catalog', t: 'dark', cart: 3, added: new Set([0, 3]), paused: new Set(), done: 2, rest: 'fixed' }
+try { Object.assign(state, JSON.parse(localStorage.getItem('fitapp-design5') || '{}'), { added: new Set([0, 3]), paused: new Set() }) } catch {}
+
+const I = {
+  dumbbell: (s = 24) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>`,
+  catalog: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>`,
+  workout: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>`,
+  calendar: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>`,
+  chat: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>`,
+  profile: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>`,
+  info: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>`,
+  clock: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
+  pause: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>`,
+  play: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>`,
+  plus: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`,
+  check: (s = 20) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>`,
+  gear: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>`,
+  drag: `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>`,
+  back: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>`,
+  chevron: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>`,
+}
+
+const GROUPS = [['Грудь', 14], ['Спина', 18], ['Плечи', 12], ['Руки', 16], ['Предплечья', 6], ['Шея', 4], ['Пресс', 11], ['Ноги', 22], ['Икры', 5], ['Резина', 9], ['ЛФК', 7], ['Кардио', 8]]
+const EXERCISES = ['Жим штанги лёжа', 'Жим гантелей на наклонной', 'Разведение гантелей', 'Отжимания на брусьях', 'Кроссовер в блоке', 'Жим в тренажёре']
+
+if (!VARIANTS.some((v) => v.id === state.v)) state.v = 'v8'
+const el = (id) => document.getElementById(id)
+const save = () => { try { localStorage.setItem('fitapp-design5', JSON.stringify({ v: state.v, s: state.s, t: state.t, pal: state.pal })) } catch {} }
+
+function controls() {
+  el('variants').innerHTML = VARIANTS.map((v) => `<button class="chip ${state.v === v.id ? 'on' : ''}" data-v="${v.id}">${v.name}</button>`).join('')
+  el('screens').innerHTML = SCREENS.map(([id, n]) => `<button class="chip ${state.s === id ? 'on' : ''}" data-s="${id}">${n}</button>`).join('')
+  el('themes').innerHTML = THEMES.map(([id, n]) => `<button class="chip ${state.t === id ? 'on' : ''}" data-t="${id}">${n}</button>`).join('')
+  el('palettes').innerHTML = state.v === 'v8' && PALETTES.length
+    ? PALETTES.map(([id, n], i) => `<button class="chip pal ${state.pal === id ? 'on' : ''}" data-p="${id ?? ''}">${i + 1} · ${n}</button>`).join('')
+    : ''
+  el('hint').textContent = VARIANTS.find((v) => v.id === state.v).hint
+}
+
+const cartBtn = () => `<button class="iconbtn" data-s="workout" aria-label="Тренировка">${I.workout}<span class="badge" id="badge">${state.cart}</span></button>`
+const tabbar = (on) => `<nav class="tabbar">${[['catalog', 'Каталог', I.catalog], ['workout', 'Тренировка', I.workout], ['cal', 'Календарь', I.calendar], ['chat', 'Чаты', I.chat], ['prof', 'Профиль', I.profile]]
+  .map(([id, n, ic]) => `<div class="tab ${id === on ? 'on' : ''}" ${['catalog', 'workout'].includes(id) ? `data-s="${id}"` : ''}>${ic}<span>${n}</span></div>`).join('')}</nav>`
+
+function catalog() {
+  if (state.v === 'v8') return `<div class="scroll">
+    <div class="topbar"><div class="grow"><div class="muted" style="font-size:14px">Что тренируем сегодня?</div><h1>Каталог</h1></div>${cartBtn()}</div>
+    ${GROUPS.map(([n, c], gi) => `<div class="shelf"><div class="shelf-h"><b>${n}</b><span data-s="group">Все ${c} ›</span></div>
+      <div class="shelf-row">${EXERCISES.map((e, i) => { const k = gi * 10 + i; return `<div class="tile" data-s="group"><div class="media"><div class="shine"></div><div class="lift">${I.dumbbell(40)}</div></div>
+        <div class="trow"><div class="tname">${e}</div><button class="tplus ${state.added.has(k) ? 'added' : ''}" data-add="${k}" aria-label="Добавить в тренировку">${state.added.has(k) ? I.check(16) : I.plus}</button></div></div>` }).join('')}</div></div>`).join('')}
+    <div style="height:70px"></div>
+  </div>
+  <div class="cartbar"><div><b>Тренировка</b><div style="font-size:13px;opacity:.7"><span id="cartcount">${state.cart}</span> упр. · ~45 мин</div></div><button class="go" data-s="workout">Открыть</button></div>
+  ${tabbar('catalog')}`
+  if (state.v === 'v7') return `<div class="scroll">
+    <div class="topbar"><div class="grow"><h1>Каталог</h1></div>${cartBtn()}</div>
+    ${GROUPS.slice(0, 6).map(([n, c]) => `<div class="shelf"><div class="shelf-h"><b>${n}</b><span data-s="group">Все ${c} ›</span></div>
+      <div class="shelf-row">${EXERCISES.map((e) => `<div class="tile" data-s="group"><div class="media"><div class="shine"></div><div class="lift">${I.dumbbell(40)}</div></div><div class="t">${e}</div></div>`).join('')}</div></div>`).join('')}
+  </div>${tabbar('catalog')}`
+  return `<div class="scroll">
+    <div class="topbar"><div class="grow"><div class="muted" style="font-size:14px">Что тренируем сегодня?</div><h1>Каталог</h1></div>${cartBtn()}</div>
+    <div class="groups">${GROUPS.map(([n, c], gi) => `<div class="group" data-s="group">
+      ${['v3', 'v4'].includes(state.v) ? `<div class="gdot">${I.dumbbell(22)}</div>` : ''}
+      <div><div class="gname">${n}</div><div class="gcount">${c} упражнений</div></div>
+      <div class="gicon">${I.dumbbell(state.v === 'v1' ? 90 : 70)}</div></div>`).join('')}</div>
+  </div>${tabbar('catalog')}`
+}
+
+function group() {
+  const tail = `<div class="cartbar"><div><b>Тренировка</b><div style="font-size:13px;opacity:.7"><span id="cartcount">${state.cart}</span> упр. · ~45 мин</div></div><button class="go" data-s="workout">Открыть</button></div>
+  ${tabbar('catalog')}${sheet()}`
+  const plus = (i) => `<button class="plus ${state.added.has(i) ? 'added' : ''}" data-add="${i}" aria-label="Добавить">${state.added.has(i) ? I.check(18) : I.plus}</button>`
+  if (state.v === 'v7') return `<div class="scroll" style="padding-top:0">
+    <div class="hero ${state.paused.has(0) ? 'paused' : ''}"><div class="lift">${I.dumbbell(80)}</div>
+      <div class="cap"><small>Грудь · 14 упражнений</small><div>Жим штанги лёжа</div>
+        <div class="row2"><button class="pill" data-add="0">${state.added.has(0) ? I.check(16) + ' В тренировке' : I.plus + ' В тренировку'}</button><button class="pill ghost" data-info="0">${I.info} Техника</button></div></div></div>
+    <div class="list">${EXERCISES.slice(1).map((n, j) => { const i = j + 1; return `<div class="item"><div class="thumb">${I.dumbbell(22)}</div>
+      <div class="meta"><div class="t">${n}</div><div class="s">Грудь · штанга / гантели</div></div><button class="mini" data-info="${i}" aria-label="Техника">${I.info}</button>${plus(i)}</div>` }).join('')}</div>
+    <button class="iconbtn" data-s="catalog" aria-label="Назад" style="position:absolute;top:14px;left:14px;z-index:5">${I.back}</button>
+    <div style="position:absolute;top:14px;right:14px;z-index:5">${cartBtn()}</div>
+  </div>${tail}`
+  return `<div class="scroll">
+    <div class="topbar"><button class="iconbtn" data-s="catalog" aria-label="Назад">${I.back}</button><div class="grow"><h1 style="font-size:28px">Грудь</h1><div class="muted" style="font-size:13px">14 упражнений</div></div>${cartBtn()}</div>
+    <div class="cards">${EXERCISES.map((n, i) => `<div class="card ${state.paused.has(i) ? 'paused' : ''}">
+      <div class="media"><div class="shine"></div><div class="lift">${I.dumbbell(54)}</div><span class="tag">видео</span>
+        <button class="pause" data-pause="${i}" aria-label="Пауза">${state.paused.has(i) ? I.play : I.pause}</button></div>
+      <div class="cinfo"><div class="cname">${n}</div>
+        <div class="cactions"><button class="mini" data-info="${i}" aria-label="Техника">${I.info}</button><button class="mini" aria-label="История">${I.clock}</button>
+        <button class="plus ${state.added.has(i) ? 'added' : ''}" data-add="${i}" aria-label="Добавить">${state.added.has(i) ? I.check(18) : I.plus}</button></div></div>
+    </div>`).join('')}</div>
+  </div>
+  <div class="cartbar"><div><b>Тренировка</b><div style="font-size:13px;opacity:.7"><span id="cartcount">${state.cart}</span> упр. · ~45 мин</div></div><button class="go" data-s="workout">Открыть</button></div>
+  ${tabbar('catalog')}${sheet()}`
+}
+
+function sheet() {
+  return `<div class="sheet-bg" id="sheet"><div class="sheet"><div class="grab"></div>
+    <h2>Жим штанги лёжа</h2>
+    <h3>Техника</h3><ul><li>Лопатки сведены и прижаты к скамье</li><li>Гриф опускается на низ груди, локти ~45°</li><li>Выжимайте по дуге к плечам, без отбива от груди</li></ul>
+    <h3>Работают</h3><div class="chips"><span>Грудные</span><span>Трицепс</span><span>Передняя дельта</span></div>
+    <h3>Частые ошибки</h3><ul><li>Отрыв таза от скамьи</li><li>Локти разведены в стороны на 90°</li></ul>
+    <p class="note">Окно открывается кнопкой ⓘ на карточке и закрывается касанием снаружи.</p></div></div>`
+}
+
+function workout() {
+  const items = [['Жим штанги лёжа', '4 × 8 · 80 кг · отдых 2:00'], ['Отжимания на брусьях', '3 × 12 · свой вес'], ['Тяга верхнего блока', '4 × 10 · 55 кг'], ['Скручивания', '3 × 20 · время по желанию']]
+  return `<div class="scroll">
+    <div class="topbar"><div class="grow"><div class="muted" style="font-size:14px">Перетащите, чтобы поменять порядок</div><h1>Тренировка</h1></div></div>
+    <div class="list">${items.map(([t, s]) => `<div class="item"><span class="drag">${I.drag}</span><div class="thumb">${I.dumbbell(22)}</div>
+      <div class="meta"><div class="t">${t}</div><div class="s">${s}</div></div><button class="mini" aria-label="Настройки">${I.gear}</button></div>`).join('')}</div>
+    <div style="height:14px"></div>
+    <div class="box"><h2>Отдых между подходами</h2>
+      <div class="seg">${[['fixed', 'Таймер 2:00'], ['watch', 'Секундомер'], ['none', 'Без таймера']].map(([id, n]) => `<span class="${state.rest === id ? 'on' : ''}" data-rest="${id}">${n}</span>`).join('')}</div>
+      <div class="muted" style="font-size:13px">Сигнал об окончании отдыха: звук и уведомление</div></div>
+    <div style="height:14px"></div>
+    <button class="btn" data-s="set">Начать тренировку</button>
+    <div style="height:8px"></div>
+    <div class="two"><button class="btn ghost">В избранное</button><button class="btn ghost">Запланировать</button></div>
+  </div>${tabbar('workout')}`
+}
+
+function setScreen() {
+  const rows = [[80, 8], [80, 8], [80, 7], [80, 6]]
+  return `<div class="scroll">
+    <div class="topbar"><button class="iconbtn" data-s="workout" aria-label="Назад">${I.back}</button><div class="grow"><div class="muted" style="font-size:13px">Упражнение 1 из 4 · 12:40</div><h2 style="font-size:22px">Жим штанги лёжа</h2></div><button class="iconbtn" data-info="0" aria-label="Техника">${I.info}</button></div>
+    <div class="ex-hero"><div class="lift">${I.dumbbell(70)}</div></div>
+    <div style="height:12px"></div>
+    <div class="progress">${[0, 1, 2, 3].map((i) => `<i class="${i === 0 ? 'on' : ''}"></i>`).join('')}</div>
+    <div style="height:12px"></div>
+    <div class="sets">${rows.map(([w, r], i) => `<div class="set ${i < state.done ? 'done' : ''}"><span class="n">${i + 1}</span>
+      <div class="val">${w}<small>кг</small></div><div class="val">${r}<small>повт.</small></div>
+      <button class="check" data-done="${i}" aria-label="Подход выполнен">${I.check(22)}</button></div>`).join('')}</div>
+    <div style="height:12px"></div>
+    <div class="rest"><div class="ring"><svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" stroke-opacity=".2" stroke-width="6"/><circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-dasharray="176" stroke-dashoffset="62" transform="rotate(-90 32 32)"/></svg><b>1:18</b></div>
+      <div><b style="font-size:17px">Отдых</b><div style="font-size:13px;opacity:.7">Следующий подход: 80 кг × 7</div></div></div>
+    <p class="note">Прошлый раз: 75 кг × 8, 8, 7 · Среднее за 3 тренировки: 77 кг</p>
+  </div>${tabbar('workout')}${sheet()}`
+}
+
+function render() {
+  controls()
+  const ph = el('phone')
+  ph.className = `phone ${{ v4: 'v3 v4', v8: 'v3 v4 v8' }[state.v] ?? state.v} ${state.t}${state.v === 'v8' && state.pal ? ' p-' + state.pal : ''}`
+  document.documentElement.style.setProperty('--ph', el('panel').offsetHeight + 'px')
+  ph.innerHTML = { catalog, group, workout, set: setScreen }[state.s]()
+  ph.scrollTop = 0
+  save()
+}
+
+document.addEventListener('click', (e) => {
+  const t = e.target.closest('[data-v],[data-p],[data-s],[data-t],[data-add],[data-pause],[data-info],[data-done],[data-rest],.sheet-bg')
+  if (!t) return
+  if (t.classList.contains('sheet-bg')) { if (e.target === t) t.classList.remove('open'); return }
+  if (t.dataset.v) { state.v = t.dataset.v; return render() }
+  if (t.dataset.p !== undefined) { state.pal = t.dataset.p || null; return render() }
+  if (t.dataset.t) { state.t = t.dataset.t; return render() }
+  if (t.dataset.s) { state.s = t.dataset.s; return render() }
+  if (t.dataset.rest) { state.rest = t.dataset.rest; return render() }
+  if (t.dataset.done) { const i = +t.dataset.done; state.done = i < state.done ? i : i + 1; return render() }
+  if (t.dataset.pause) { const i = +t.dataset.pause; state.paused.has(i) ? state.paused.delete(i) : state.paused.add(i); return render() }
+  if (t.dataset.info) { el('sheet')?.classList.add('open'); return }
+  if (t.dataset.add) {
+    const i = +t.dataset.add
+    if (state.added.has(i)) { state.added.delete(i); state.cart--; return render() }
+    // Анимация «улетает в корзину»
+    const ph = el('phone').getBoundingClientRect(), from = t.getBoundingClientRect(), to = el('badge').getBoundingClientRect()
+    const dot = document.createElement('div'); dot.className = 'flybox'
+    dot.style.left = from.left - ph.left + from.width / 2 - 8 + 'px'; dot.style.top = from.top - ph.top + from.height / 2 - 8 + 'px'
+    el('phone').appendChild(dot)
+    requestAnimationFrame(() => { dot.style.transform = `translate(${to.left - from.left}px, ${to.top - from.top}px) scale(.6)`; dot.style.opacity = '.4' })
+    state.added.add(i); state.cart++
+    const rich = state.v === 'v7'
+    if (!rich) { t.classList.add('added'); t.innerHTML = I.check(18) }
+    setTimeout(() => { dot.remove(); if (rich) return render(); const b = el('badge'); b.textContent = state.cart; b.classList.add('pop'); const cc = el('cartcount'); if (cc) cc.textContent = state.cart; setTimeout(() => b.classList.remove('pop'), 250) }, 560)
+  }
+})
+render()
+</script>
+</body>
+</html>
